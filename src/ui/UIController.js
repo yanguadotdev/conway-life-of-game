@@ -110,7 +110,6 @@ class UIController {
         // Drag para dibujar
         gridElement.addEventListener('mousedown', (e) => {
             this.isDrawing = true;
-            this.handleCellClick(e);
         });
 
         gridElement.addEventListener('mousemove', (e) => {
