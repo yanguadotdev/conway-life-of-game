@@ -1,5 +1,5 @@
 /**
- * Controlador para cargar patrones en la cuadrícula
+ * Controller to load patterns in the grid
  */
 class PatternLoader {
     constructor(grid) {
@@ -7,48 +7,45 @@ class PatternLoader {
     }
 
     /**
-     * Carga un patrón en la cuadrícula
-     * @param {string} patternName - Nombre del patrón
-     * @param {number} startRow - Fila de inicio (opcional)
-     * @param {number} startCol - Columna de inicio (opcional)
-     * @param {boolean} clearGrid - Si debe limpiar la cuadrícula antes (opcional)
+     * Load a pattern in the grid
+     * @param {string} patternName - Pattern name
+     * @param {number} startRow - Start row (optional)
+     * @param {number} startCol - Start column (optional)
+     * @param {boolean} clearGrid - Clear grid before (optional)
      */
     loadPattern(patternName, startRow = null, startCol = null, clearGrid = true) {
         const pattern = PatternLibrary.getPatternArray(patternName);
         
-        if (!pattern) {
-            console.warn(`Patrón '${patternName}' no encontrado`);
-            return false;
-        }
+        if (!pattern) return
 
-        // Limpiar cuadrícula si se solicita
+        // Clear grid if requested
         if (clearGrid) {
             this.grid.clear();
         }
 
-        // Calcular posición de inicio centrada si no se especifica
+        // Calculate center position if not specified
         if (startRow === null || startCol === null) {
             startRow = Math.floor((this.grid.rows - pattern.length) / 2);
             startCol = Math.floor((this.grid.cols - pattern[0].length) / 2);
         }
 
-        // Asegurar que el patrón cabe en la cuadrícula
+        // Ensure the pattern fits in the grid
         if (!this.canFitPattern(pattern, startRow, startCol)) {
-            console.warn(`El patrón '${patternName}' no cabe en la posición especificada`);
+            showMessage(`Pattern '${patternName}' does not fit in the specified position`, { type: 'warning' });
             return false;
         }
 
-        // Cargar el patrón
+        // Load the pattern
         this.setPattern(pattern, startRow, startCol);
         
         return true;
     }
 
     /**
-     * Establece un patrón en la cuadrícula
-     * @param {Array} pattern - Array 2D del patrón
-     * @param {number} startRow - Fila de inicio
-     * @param {number} startCol - Columna de inicio
+     * Set a pattern in the grid
+     * @param {Array} pattern - Array 2D of the pattern
+     * @param {number} startRow - Start row
+     * @param {number} startCol - Start column
      */
     setPattern(pattern, startRow, startCol) {
         for (let row = 0; row < pattern.length; row++) {
@@ -65,11 +62,11 @@ class PatternLoader {
     }
 
     /**
-     * Verifica si un patrón puede caber en la posición especificada
-     * @param {Array} pattern - Array 2D del patrón
-     * @param {number} startRow - Fila de inicio
-     * @param {number} startCol - Columna de inicio
-     * @returns {boolean} - True si el patrón cabe
+     * Verify if the pattern can fit in the grid
+     * @param {Array} pattern - Array 2D of the pattern
+     * @param {number} startRow - Start row
+     * @param {number} startCol - Start column
+     * @returns {boolean} - True if the pattern can fit
      */
     canFitPattern(pattern, startRow, startCol) {
         const patternHeight = pattern.length;
@@ -84,21 +81,18 @@ class PatternLoader {
     }
 
     /**
-     * Carga un patrón en una posición específica haciendo clic
-     * @param {string} patternName - Nombre del patrón
-     * @param {number} clickRow - Fila donde se hizo clic
-     * @param {number} clickCol - Columna donde se hizo clic
-     * @param {boolean} clearGrid - Si debe limpiar la cuadrícula antes
+     * Load a pattern at specific position by clicking
+     * @param {string} patternName - Pattern name
+     * @param {number} clickRow - Row where the click was made
+     * @param {number} clickCol - Column where the click was made
+     * @param {boolean} clearGrid - Clear grid before loading
      */
     loadPatternAt(patternName, clickRow, clickCol, clearGrid = true) {
         const pattern = PatternLibrary.getPatternArray(patternName);
         
-        if (!pattern) {
-            console.warn(`Patrón '${patternName}' no encontrado`);
-            return false;
-        }
+        if (!pattern) return
 
-        // Calcular posición para centrar el patrón en el punto de clic
+        // Calculate position to center the pattern at the click point
         const startRow = clickRow - Math.floor(pattern.length / 2);
         const startCol = clickCol - Math.floor(pattern[0].length / 2);
 
@@ -106,25 +100,21 @@ class PatternLoader {
     }
 
     /**
-     * Obtiene información sobre un patrón
-     * @param {string} patternName - Nombre del patrón
-     * @returns {Object|null} - Información del patrón
+     * Get information about a pattern
+     * @param {string} patternName - Pattern name
+     * @returns {Object|null} - Pattern information
      */
     getPatternInfo(patternName) {
         return PatternLibrary.getPattern(patternName);
     }
 
-    /**
-     * Obtiene todos los nombres de patrones disponibles
-     * @returns {Array} - Array con los nombres de patrones
-     */
     getAvailablePatterns() {
         return PatternLibrary.getPatternNames();
     }
 
     /**
-     * Carga un patrón aleatorio
-     * @param {boolean} clearGrid - Si debe limpiar la cuadrícula antes
+     * Load a random pattern
+     * @param {boolean} clearGrid - Clear grid before loading
      */
     loadRandomPattern(clearGrid = true) {
         const patterns = this.getAvailablePatterns();
@@ -134,12 +124,12 @@ class PatternLoader {
     }
 
     /**
-     * Crea un patrón personalizado desde el estado actual de la cuadrícula
-     * @param {number} startRow - Fila de inicio del área a capturar
-     * @param {number} startCol - Columna de inicio del área a capturar
-     * @param {number} endRow - Fila final del área a capturar
-     * @param {number} endCol - Columna final del área a capturar
-     * @returns {Array} - Patrón capturado como array 2D
+     * Capture a pattern from the grid state
+     * @param {number} startRow - Start row of the area to capture
+     * @param {number} startCol - Start column of the area to capture
+     * @param {number} endRow - End row of the area to capture
+     * @param {number} endCol - End column of the area to capture
+     * @returns {Array} - Captured pattern as 2D array
      */
     capturePattern(startRow, startCol, endRow, endCol) {
         const pattern = [];

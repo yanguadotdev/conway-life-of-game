@@ -87,7 +87,7 @@ class PatternLibrary {
     }
 
     /**
-     * Obtiene un patrón específico por su nombre
+     * Get a patter by name
      */
     static getPattern(name) {
         const patterns = this.getAllPatterns();
@@ -95,7 +95,7 @@ class PatternLibrary {
     }
 
     /**
-     * Obtiene solo el array del patrón
+     * Get patter array by name
      */
     static getPatternArray(name) {
         const pattern = this.getPattern(name);
@@ -103,14 +103,14 @@ class PatternLibrary {
     }
 
     /**
-     * Obtiene los nombres de todos los patrones
+     * Get all pattern names
      */
     static getPatternNames() {
         return Object.keys(this.getAllPatterns());
     }
 
     /**
-     * Verifica si un patrón existe
+     * Check if a pattern exists
      */
     static hasPattern(name) {
         return this.getPattern(name) !== null;

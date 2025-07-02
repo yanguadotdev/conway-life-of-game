@@ -21,21 +21,24 @@ class Grid {
         const gridElement = document.createElement('div');
         gridElement.className = 'grid';
         gridElement.id = 'grid';
-        
-        // Crear elementos de celdas
+
+        const fragment = document.createDocumentFragment();
+
+        // Create elements for cells
         for (let row = 0; row < this.rows; row++) {
             for (let col = 0; col < this.cols; col++) {
                 const cellElement = this.cells[row][col].createElement();
-                gridElement.appendChild(cellElement);
+                fragment.appendChild(cellElement);
             }
         }
-        
+
+        gridElement.appendChild(fragment);
         this.element = gridElement;
         return gridElement;
     }
 
     /**
-     * Obtiene una celda específica
+     * Get a specific cell  
      */
     getCell(row, col) {
         if (this.isValidPosition(row, col)) {
@@ -45,14 +48,14 @@ class Grid {
     }
 
     /**
-     * Verifica si una posición es válida
+     * Verify if a position is valid
      */
     isValidPosition(row, col) {
         return row >= 0 && row < this.rows && col >= 0 && col < this.cols;
     }
 
     /**
-     * Alterna el estado de una celda
+     * Toggle the state of a cell
      */
     toggleCell(row, col) {
         const cell = this.getCell(row, col);
@@ -62,7 +65,7 @@ class Grid {
     }
 
     /**
-     * Establece el estado de una celda
+     * Set the state of a cell
      */
     setCellState(row, col, isAlive) {
         const cell = this.getCell(row, col);
@@ -72,7 +75,7 @@ class Grid {
     }
 
     /**
-     * Obtiene el estado actual de toda la cuadrícula
+     * Get the current state of all the grid
      */
     getGridState() {
         const state = [];
@@ -86,7 +89,7 @@ class Grid {
     }
 
     /**
-     * Establece el estado de toda la cuadrícula
+     * Set the state of all the grid
      */
     setGridState(state) {
         for (let row = 0; row < this.rows && row < state.length; row++) {
@@ -97,7 +100,7 @@ class Grid {
     }
 
     /**
-     * Limpia toda la cuadrícula
+     * Clear all the grid
      */
     clear() {
         for (let row = 0; row < this.rows; row++) {
@@ -108,17 +111,17 @@ class Grid {
     }
 
     /**
-     * Cuenta los vecinos vivos de una celda
+     * Count the neighbors of a cell
      */
     countNeighbors(row, col) {
         let count = 0;
         for (let i = -1; i <= 1; i++) {
             for (let j = -1; j <= 1; j++) {
                 if (i === 0 && j === 0) continue;
-                
+
                 const newRow = row + i;
                 const newCol = col + j;
-                
+
                 if (this.isValidPosition(newRow, newCol)) {
                     const cell = this.getCell(newRow, newCol);
                     if (cell && cell.getState()) {

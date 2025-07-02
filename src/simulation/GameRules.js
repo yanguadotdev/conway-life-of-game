@@ -1,26 +1,31 @@
+/**
+ * Game Rules
+ * 
+ * 1. Any live cell with two or three live neighbors survives.
+ * 2. Any dead cell with three live neighbors becomes a live cell.
+ * 3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+ */
+
+
 class GameRules {
     /**
-     * Determina si una celda debe estar viva en la siguiente generación
-     * @param {boolean} currentState - Estado actual de la celda
-     * @param {number} neighbors - Número de vecinos vivos
-     * @returns {boolean} - Nuevo estado de la celda
+     * Determine if a cell should be alive in the next generation
+     * @param {boolean} currentState - Current state of the cell
+     * @param {number} neighbors - Number of neighbors alive
+     * @returns {boolean} - New state of the cell
      */
     static getNextState(currentState, neighbors) {
         if (currentState) {
-            // Célula viva
-            // Sobrevive con 2 o 3 vecinos
             return neighbors === 2 || neighbors === 3;
         } else {
-            // Célula muerta
-            // Nace con exactamente 3 vecinos
             return neighbors === 3;
         }
     }
 
     /**
-     * Aplica las reglas a toda la cuadrícula para generar el siguiente estado
-     * @param {Grid} grid - La cuadrícula actual
-     * @returns {Array} - Nuevo estado de la cuadrícula
+     * Apply the rules to the grid to generate the next generation
+     * @param {Grid} grid - The grid to apply the rules
+     * @returns {Array} - New state of the grid
      */
     static evolveGrid(grid) {
         const newState = [];
@@ -40,7 +45,7 @@ class GameRules {
     }
 
     /**
-     * Verifica si el estado de la cuadrícula ha cambiado
+     * Verify if the grid state has changed
      */
     static hasChanged(oldState, newState) {
         if (!oldState || !newState) return true;

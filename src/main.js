@@ -1,84 +1,26 @@
-/**
- * Punto de entrada principal del Juego de la Vida de Conway
- * Inicializa la aplicación cuando el DOM está listo
- */
-
-// Variable global para la instancia del juego
+// Global variable for the game instance
 let gameOfLife = null;
 
 /**
- * Inicializa el juego
+ * Initialize the game
  */
 function initGame() {
     try {
-        // Crear instancia del juego
+        // Create the game instance
         gameOfLife = new GameOfLife('.container');
         
     } catch (error) {
-        console.error('Error al inicializar el juego:', error);
-        showErrorMessage('Error al inicializar el juego. Por favor, recarga la página.');
+        showMessage('Error al inicializar el juego. Por favor, recarga la página.', { type: 'error' });
     }
 }
 
-/**
- * Muestra un mensaje de error al usuario
- */
-function showErrorMessage(message) {
-    // Crear elemento de error si no existe
-    let errorDiv = document.getElementById('error-message');
-    if (!errorDiv) {
-        errorDiv = document.createElement('div');
-        errorDiv.id = 'error-message';
-        errorDiv.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ff4444;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-family: 'Work Sans', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
-        `;
-        document.body.appendChild(errorDiv);
-    }
-
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-
-    // Ocultar después de 5 segundos
-    setTimeout(() => {
-        if (errorDiv.parentNode) {
-            errorDiv.style.display = 'none';
-        }
-    }, 5000);
-}
 
 /**
- * Función debounce para optimizar eventos frecuentes
- */
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-/**
- * Funciones de utilidad para desarrollo/debugging
+ * Utility functions for development/debugging
  */
 window.gameUtils = {
     /**
-     * Obtiene estadísticas del juego actual
+     * Get game statistics
      */
     getStats: () => {
         if (!gameOfLife) return null;
@@ -105,7 +47,7 @@ window.gameUtils = {
     },
 
     /**
-     * Carga un patrón aleatorio
+     * Load a random pattern
      */
     loadRandomPattern: () => {
         if (!gameOfLife) return;
@@ -114,7 +56,7 @@ window.gameUtils = {
     },
 
     /**
-     * Exporta el estado actual como JSON
+     * Export the current state as JSON
      */
     exportState: () => {
         if (!gameOfLife) return null;
@@ -127,7 +69,7 @@ window.gameUtils = {
     },
 
     /**
-     * Importa un estado desde JSON
+     * Import the state from JSON
      */
     importState: (jsonString) => {
         if (!gameOfLife) return false;
@@ -139,16 +81,16 @@ window.gameUtils = {
             simulation.pause();
             grid.setGridState(data.state);
             
-            console.log('Estado importado exitosamente');
+            console.log('State imported successfully');
             return true;
         } catch (error) {
-            console.error('Error al importar estado:', error);
+            console.error('Error importing state:', error);
             return false;
         }
     },
 
     /**
-     * Pausa/reanuda la simulación
+     * Pause/resume the simulation
      */
     toggle: () => {
         if (!gameOfLife) return;
@@ -156,22 +98,22 @@ window.gameUtils = {
     },
 
     /**
-     * Reinicia el juego completamente
+     * Reset the game completely
      */
     reset: () => {
         if (!gameOfLife) return;
         gameOfLife.reset();
-        console.log('Juego reiniciado');
+        console.log('Game reset');
     }
 };
 
-// Inicializar cuando el DOM esté listo
+// Initialize when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initGame);
 } else {
-    // DOM ya está listo
+    // DOM is already ready
     initGame();
 }
 
-// Exportar para uso global
+// Export for global use
 window.gameOfLife = gameOfLife;
