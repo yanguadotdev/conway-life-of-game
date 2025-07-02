@@ -1,6 +1,5 @@
 /**
- * Clase principal del Juego de la Vida de Conway
- * Coordina todos los componentes del juego
+ * Main class of Game of Life
  */
 class GameOfLife {
     constructor(containerSelector) {
@@ -13,77 +12,61 @@ class GameOfLife {
         this.init();
     }
 
-    /**
-     * Inicializa el juego
-     */
     init() {
-        // Crear la cuadrícula
+        // Create the grid
         this.grid = new Grid(30, 40);
         
-        // Crear el controlador de simulación
+        // Create the simulation controller
         this.simulation = new SimulationController(this.grid);
         
-        // Crear el cargador de patrones
+        // Create the pattern loader
         this.patternLoader = new PatternLoader(this.grid);
         
-        // Crear el controlador de UI
+        // Create the UI controller
         this.uiController = new UIController(this.grid, this.simulation, this.patternLoader);
         
-        // Renderizar el juego
+        // Render the game
         this.render();
         
-        // Configurar eventos
+        // Setup events
         this.setupEvents();
     }
 
     /**
-     * Renderiza el juego en el DOM
+     * Render the game in the DOM
      */
     render() {
-        const container = document.querySelector(this.containerSelector);
-        if (!container) {
-            console.error('Container not found:', this.containerSelector);
-            return;
-        }
+        const container = $(this.containerSelector);
+        if (!container) return
 
-        // Reemplazar la cuadrícula con la del objeto Grid
-        const gridContainer = container.querySelector('.grid-container');
-        const oldGrid = gridContainer.querySelector('.grid');
+        const gridContainer = $('.grid-container', container);
+        const oldGrid = $('.grid', gridContainer);
         const newGrid = this.grid.createElement();
         gridContainer.replaceChild(newGrid, oldGrid);
     }
 
     /**
-     * Configura los eventos del juego
+     * Setup events of game
      */
     setupEvents() {
-        // Los eventos se manejan en UIController
+        // Events are handled in UIController
         this.uiController.bindEvents();
     }
 
-    /**
-     * Obtiene la instancia del grid
-     */
     getGrid() {
         return this.grid;
     }
 
-    /**
-     * Obtiene la instancia de la simulación
-     */
     getSimulation() {
         return this.simulation;
     }
 
-    /**
-     * Obtiene la instancia del cargador de patrones
-     */
     getPatternLoader() {
         return this.patternLoader;
     }
 
     /**
-     * Reinicia el juego
+     * Reset the game
      */
     reset() {
         this.simulation.stop();
@@ -91,7 +74,7 @@ class GameOfLife {
     }
 
     /**
-     * Destruye el juego y limpia recursos
+     * Destroy the game and clean resources
      */
     destroy() {
         if (this.simulation) {
@@ -102,7 +85,7 @@ class GameOfLife {
             this.uiController.unbindEvents();
         }
 
-        const container = document.querySelector(this.containerSelector);
+        const container = $(this.containerSelector);
         if (container) {
             container.innerHTML = '';
         }

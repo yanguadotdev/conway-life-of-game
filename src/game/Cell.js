@@ -23,6 +23,7 @@ class Cell {
      * Alterna el estado vivo/muerto de la celda
      */
     toggle() {
+        console.log('Toggle cell');
         this.isAlive = !this.isAlive;
         this.updateVisualState();
     }
