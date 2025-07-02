@@ -199,7 +199,9 @@ class UIController {
      */
     updatePlayButton(isRunning) {
         if (this.playButton) {
-            this.playButton.textContent = isRunning ? '⏸ Pause' : '▶ Play';
+            this.playButton.querySelector('.btn-text').textContent = isRunning ? 'Pause' : 'Play';
+            this.playButton.querySelector('svg use')
+                .setAttribute('href', isRunning ? '/src/icons.svg#icon-pause' : '/src/icons.svg#icon-play');
         }
     }
 

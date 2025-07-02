@@ -1,44 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego de la Vida de Conway</title>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+
     <!-- Estilos -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/grid.css">
     <link rel="stylesheet" href="styles/controls.css">
 </head>
+
 <body>
     <div class="container">
         <div class="grid-container">
             <div class="grid" id="grid"></div>
         </div>
-        
+
         <!-- Floating controls -->
         <div class="controls">
-            <button class="btn" id="playBtn">▶ Play</button>
+            <button class="btn" id="playBtn">
+                <svg width="24" height="24">
+                    <use href="/src/icons.svg#icon-play"></use>
+                </svg>
+                <span class="btn-text">Play</span>
+            </button>
             <button class="btn secondary" id="clearBtn">Clear</button>
-            
+
             <div class="patterns">
                 <label for="patternSelect">Pattern:</label>
                 <select id="patternSelect">
                     <option value="">Select pattern</option>
                 </select>
             </div>
-            
+
             <div class="speed-control">
                 <label for="speedRange">Speed:</label>
                 <input type="range" id="speedRange" min="50" max="1000" value="200" step="50">
             </div>
-            
+
             <div class="generation-counter">
                 Gen: <span id="generationCount">0</span>
             </div>
         </div>
     </div>
+
 
     <script src="src/lib/utils.js"></script>
     <script src="src/game/Grid.js"></script>
@@ -51,4 +59,5 @@
     <script src="src/GameOfLife.js"></script>
     <script src="src/main.js"></script>
 </body>
+
 </html>
