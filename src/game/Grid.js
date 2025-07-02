@@ -1,5 +1,5 @@
 class Grid {
-    constructor(rows = 30, cols = 40) {
+    constructor(rows = 100, cols = 100) {
         this.rows = rows;
         this.cols = cols;
         this.cells = [];

@@ -94,4 +94,6 @@
     font-size: 14px;
     color: #ccc;
     font-weight: 400;
+    font-family: monospace;
+    min-width: 3ch;
 }

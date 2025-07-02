@@ -14,7 +14,7 @@ class GameOfLife {
 
     init() {
         // Create the grid
-        this.grid = new Grid(30, 40);
+        this.grid = new Grid(100, 100);
         
         // Create the simulation controller
         this.simulation = new SimulationController(this.grid);
