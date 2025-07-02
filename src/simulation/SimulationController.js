@@ -3,7 +3,7 @@ class SimulationController {
         this.grid = grid;
         this.isRunning = false;
         this.generation = 0;
-        this.speed = 200; // milisegundos
+        this.speed = 200; // miliseconds
         this.intervalId = null;
         this.previousState = null;
         this.listeners = {
@@ -13,47 +13,45 @@ class SimulationController {
     }
 
     /**
-     * Inicia la simulación
+     * Start the simulation
      */
     start() {
         if (this.isRunning) return;
-        
+
         this.isRunning = true;
         this.intervalId = setInterval(() => {
             this.nextGeneration();
         }, this.speed);
-        
+
         this.notifyStateChange('started');
     }
 
     /**
-     * Pausa la simulación
+     * Pause the simulation
      */
     pause() {
         if (!this.isRunning) return;
-        
+
         this.isRunning = false;
         if (this.intervalId) {
             clearInterval(this.intervalId);
             this.intervalId = null;
         }
-        
+
         this.notifyStateChange('paused');
     }
 
     /**
-     * Alterna entre iniciar y pausar
+     * Toggle between start and pause
      */
     toggle() {
-        if (this.isRunning) {
-            this.pause();
-        } else {
-            this.start();
-        }
+        this.isRunning
+            ? this.pause()
+            : this.start();
     }
 
     /**
-     * Detiene y reinicia la simulación
+     * Stop and reset the simulation
      */
     stop() {
         this.pause();
@@ -64,27 +62,27 @@ class SimulationController {
     }
 
     /**
-     * Ejecuta una sola generación
+     * Execute a single generation
      */
     nextGeneration() {
         const currentState = this.grid.getGridState();
         const newState = GameRules.evolveGrid(this.grid);
-        
-        // Verificar si hay cambios
+
+        // Verify if the grid state has changed
         if (!GameRules.hasChanged(currentState, newState)) {
-            this.pause(); // Auto-pausa si no hay cambios
+            this.pause();
             return;
         }
-        
+
         this.grid.setGridState(newState);
         this.generation++;
         this.previousState = currentState;
-        
+
         this.notifyGenerationChange();
     }
 
     /**
-     * Establece la velocidad de la simulación
+     * Set the simulation speed
      */
     setSpeed(speed) {
         this.speed = speed;
@@ -95,7 +93,7 @@ class SimulationController {
     }
 
     /**
-     * Obtiene el estado actual de la simulación
+     * Get the current state of the simulation
      */
     getState() {
         return {
@@ -106,21 +104,21 @@ class SimulationController {
     }
 
     /**
-     * Agrega un listener para cambios de generación
+     * Add a listeners for generation changes
      */
     onGenerationChange(callback) {
         this.listeners.generationChange.push(callback);
     }
 
     /**
-     * Agrega un listener para cambios de estado
+     * Add a listener for state changes
      */
     onStateChange(callback) {
         this.listeners.stateChange.push(callback);
     }
 
     /**
-     * Notifica cambios de generación
+     * Notify generation changes
      */
     notifyGenerationChange() {
         this.listeners.generationChange.forEach(callback => {
@@ -129,7 +127,7 @@ class SimulationController {
     }
 
     /**
-     * Notifica cambios de estado
+     * Notify state changes
      */
     notifyStateChange(state) {
         this.listeners.stateChange.forEach(callback => {
