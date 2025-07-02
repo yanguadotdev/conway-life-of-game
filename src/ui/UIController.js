@@ -157,6 +157,10 @@ class UIController {
                     break;
             }
         });
+
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
     }
 
     /**
