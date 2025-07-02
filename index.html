@@ -21,30 +21,36 @@
 
         <!-- Floating controls -->
         <div class="controls">
-            <button class="btn" id="playBtn">
-                <svg width="24" height="24">
-                    <use href="/src/icons.svg#icon-play"></use>
-                </svg>
-                <span class="btn-text">Play</span>
-            </button>
-            <button class="btn secondary" id="clearBtn">Clear</button>
-
-            <div class="patterns">
-                <label for="patternSelect">Pattern:</label>
-                <select id="patternSelect">
-                    <option value="">Select pattern</option>
-                </select>
+            <div class="controls-left">
+                <button class="btn secondary" id="clearBtn">Clear</button>
+                <div class="patterns">
+                    <label for="patternSelect">Pattern:</label>
+                    <select id="patternSelect">
+                        <option value="">Select pattern</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="speed-control">
-                <label for="speedRange">Speed:</label>
-                <input type="range" id="speedRange" min="50" max="1000" value="200" step="50">
+            <div class="controls-center">
+                <button class="btn" id="playBtn">
+                    <svg width="24" height="24">
+                        <use href="/src/icons.svg#icon-play"></use>
+                    </svg>
+                    <span class="btn-text">Play</span>
+                </button>
             </div>
 
-            <div class="generation-counter">
-                Gen: <span id="generationCount">0</span>
+            <div class="controls-right">
+                <div class="speed-control">
+                    <label for="speedRange">Speed:</label>
+                    <input type="range" id="speedRange" min="50" max="1000" value="200" step="50">
+                </div>
+                <div class="generation-counter">
+                    Gen: <span id="generationCount">0</span>
+                </div>
             </div>
         </div>
+
     </div>
 
 
