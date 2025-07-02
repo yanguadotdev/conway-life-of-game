@@ -10,47 +10,10 @@ function initGame() {
         gameOfLife = new GameOfLife('.container');
         
     } catch (error) {
-        showErrorMessage('Error al inicializar el juego. Por favor, recarga la página.');
+        showMessage('Error al inicializar el juego. Por favor, recarga la página.', { type: 'error' });
     }
 }
 
-/**
- * Show an error message to the user
- */
-function showErrorMessage(message) {
-    // Crear elemento de error si no existe
-    let errorDiv = document.getElementById('error-message');
-    if (!errorDiv) {
-        errorDiv = document.createElement('div');
-        errorDiv.id = 'error-message';
-        errorDiv.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ff444422;
-            border: 1px solid #ff4444;
-            color: #ff4444;
-            padding: 12px 24px;
-            border-radius: 2px;
-            font-family: 'Work Sans', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 1000;
-        `;
-        document.body.appendChild(errorDiv);
-    }
-
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-
-    // Hidden after 5 seconds
-    setTimeout(() => {
-        if (errorDiv.parentNode) {
-            errorDiv.style.display = 'none';
-        }
-    }, 5000);
-}
 
 /**
  * Utility functions for development/debugging
