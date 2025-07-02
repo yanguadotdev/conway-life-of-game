@@ -1,0 +1,97 @@
+.controls {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.btn {
+    background: #00ff88;
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    min-width: 80px;
+}
+
+.btn:hover {
+    background: #00cc6a;
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn.secondary {
+    background: #333;
+    color: #fff;
+}
+
+.btn.secondary:hover {
+    background: #444;
+}
+
+.patterns {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.patterns label {
+    font-size: 14px;
+    font-weight: 400;
+    color: #ccc;
+}
+
+.patterns select {
+    background: #2a2a2a;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.patterns select:focus {
+    outline: none;
+    border-color: #00ff88;
+}
+
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.speed-control label {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.speed-control input {
+    width: 80px;
+    accent-color: #00ff88;
+}
+
+.generation-counter {
+    font-size: 14px;
+    color: #ccc;
+    font-weight: 400;
+}

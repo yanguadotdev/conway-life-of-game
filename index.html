@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de la Vida de Conway</title>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/grid.css">
+    <link rel="stylesheet" href="styles/controls.css">
+</head>
+<body>
+    <div class="container">
+        <div class="grid-container">
+            <div class="grid" id="grid"></div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" id="playBtn">▶ Play</button>
+            <button class="btn secondary" id="clearBtn">Clear</button>
+            
+            <div class="patterns">
+                <label for="patternSelect">Patrón:</label>
+                <select id="patternSelect">
+                    <option value="">Seleccionar patrón</option>
+                    <option value="glider">Planeador</option>
+                    <option value="gosper">Cañón de Gosper</option>
+                    <option value="pulsar">Pulsar</option>
+                    <option value="beacon">Faro</option>
+                    <option value="toad">Sapo</option>
+                    <option value="block">Bloque</option>
+                    <option value="blinker">Parpadeo</option>
+                </select>
+            </div>
+            
+            <div class="speed-control">
+                <label for="speedRange">Velocidad:</label>
+                <input type="range" id="speedRange" min="50" max="1000" value="200" step="50">
+            </div>
+            
+            <div class="generation-counter">
+                Gen: <span id="generationCount">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/game/Grid.js"></script>
+    <script src="src/game/Cell.js"></script>
+    <script src="src/simulation/GameRules.js"></script>
+    <script src="src/simulation/SimulationController.js"></script>
+    <script src="src/patterns/PatternLibrary.js"></script>
+    <script src="src/patterns/PatternLoader.js"></script>
+    <script src="src/ui/UIController.js"></script>
+    <script src="src/ui/EventHandlers.js"></script>
+    <script src="src/GameOfLife.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>
