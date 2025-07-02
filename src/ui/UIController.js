@@ -1,55 +1,56 @@
 /**
- * Controlador de la interfaz de usuario
+ * Controller for the UI
  */
 class UIController {
     constructor(grid, simulation, patternLoader) {
         this.grid = grid;
         this.simulation = simulation;
         this.patternLoader = patternLoader;
-        
-        // Referencias a elementos DOM
+
+        // DOM elements
         this.playButton = null;
         this.clearButton = null;
         this.patternSelect = null;
         this.speedRange = null;
         this.generationCounter = null;
-        
-        // Estado
+
+        // State
         this.isDrawing = false;
         this.selectedPattern = null;
-        
+
         this.initElements();
         this.setupSimulationListeners();
+        this.updatePatternSelect();
     }
 
     /**
-     * Inicializa las referencias a elementos DOM
+     * Initialize DOM elements
      */
     initElements() {
-        this.playButton = document.getElementById('playBtn');
-        this.clearButton = document.getElementById('clearBtn');
-        this.patternSelect = document.getElementById('patternSelect');
-        this.speedRange = document.getElementById('speedRange');
-        this.generationCounter = document.getElementById('generationCount');
+        this.playButton = $('#playBtn');
+        this.clearButton = $('#clearBtn');
+        this.patternSelect = $('#patternSelect');
+        this.speedRange = $('#speedRange');
+        this.generationCounter = $('#generationCount');
     }
 
     /**
-     * Configura los listeners de la simulación
+     * Setup simulation listeners
      */
     setupSimulationListeners() {
-        // Listener para cambios de generación
+        // Listener for generation changes
         this.simulation.onGenerationChange((generation) => {
             this.updateGenerationCounter(generation);
         });
 
-        // Listener para cambios de estado de la simulación
+        // Listener for simulation state changes
         this.simulation.onStateChange((state, isRunning) => {
             this.updatePlayButton(isRunning);
         });
     }
 
     /**
-     * Vincula todos los eventos de la UI
+     * Bind all UI events
      */
     bindEvents() {
         this.bindControlEvents();
@@ -58,7 +59,7 @@ class UIController {
     }
 
     /**
-     * Vincula eventos de los controles
+     * Bind control events
      */
     bindControlEvents() {
         // Botón play/pause
@@ -76,7 +77,7 @@ class UIController {
             });
         }
 
-        // Selector de patrones
+        // Pattern selector
         if (this.patternSelect) {
             this.patternSelect.addEventListener('change', (e) => {
                 this.selectedPattern = e.target.value;
@@ -86,7 +87,7 @@ class UIController {
             });
         }
 
-        // Control de velocidad
+        // Speed control
         if (this.speedRange) {
             this.speedRange.addEventListener('input', (e) => {
                 const speed = parseInt(e.target.value);
@@ -96,23 +97,23 @@ class UIController {
     }
 
     /**
-     * Vincula eventos de la cuadrícula
+     * Bind grid events
      */
     bindGridEvents() {
         const gridElement = this.grid.element;
         if (!gridElement) return;
 
-        // Click en celdas
-        gridElement.addEventListener('click', (e) => {
+        // Click on cells
+        gridElement.addEventListener('click', e => {
             this.handleCellClick(e);
         });
 
-        // Drag para dibujar
-        gridElement.addEventListener('mousedown', (e) => {
+        // Drag to draw
+        gridElement.addEventListener('mousedown', e => {
             this.isDrawing = true;
         });
 
-        gridElement.addEventListener('mousemove', (e) => {
+        gridElement.addEventListener('mousemove', e => {
             if (this.isDrawing) {
                 this.handleCellHover(e);
             }
@@ -122,18 +123,18 @@ class UIController {
             this.isDrawing = false;
         });
 
-        // Prevenir selección de texto al arrastrar
+        // Prevent text selection while dragging
         gridElement.addEventListener('selectstart', (e) => {
             e.preventDefault();
         });
     }
 
     /**
-     * Vincula eventos de teclado
+     * Bind keyboard events
      */
     bindKeyboardEvents() {
         document.addEventListener('keydown', (e) => {
-            switch(e.code) {
+            switch (e.code) {
                 case 'Space':
                     e.preventDefault();
                     this.simulation.toggle();
@@ -154,18 +155,12 @@ class UIController {
                         }
                     }
                     break;
-                case 'KeyN':
-                    if (e.ctrlKey) {
-                        e.preventDefault();
-                        this.simulation.nextGeneration();
-                    }
-                    break;
             }
         });
     }
 
     /**
-     * Maneja clicks en celdas
+     * Handle cell clicks
      */
     handleCellClick(e) {
         const cellElement = e.target;
@@ -175,16 +170,16 @@ class UIController {
         const col = parseInt(cellElement.dataset.col);
 
         if (this.selectedPattern && this.selectedPattern !== '') {
-            // Cargar patrón en la posición clickeada
+            // Load pattern at clicked position
             this.patternLoader.loadPatternAt(this.selectedPattern, row, col, false);
         } else {
-            // Alternar estado de la celda
+            // Toggle cell state
             this.grid.toggleCell(row, col);
         }
     }
 
     /**
-     * Maneja hover sobre celdas durante el drag
+     * Handle cell hover while dragging
      */
     handleCellHover(e) {
         const cellElement = e.target;
@@ -193,14 +188,14 @@ class UIController {
         const row = parseInt(cellElement.dataset.row);
         const col = parseInt(cellElement.dataset.col);
 
-        // Solo dibujar si no hay patrón seleccionado
+        // Only draw if not there is a pattern selected
         if (!this.selectedPattern || this.selectedPattern === '') {
             this.grid.setCellState(row, col, true);
         }
     }
 
     /**
-     * Actualiza el botón de play
+     * Update play button
      */
     updatePlayButton(isRunning) {
         if (this.playButton) {
@@ -209,7 +204,7 @@ class UIController {
     }
 
     /**
-     * Actualiza el contador de generaciones
+     * Update generation counter
      */
     updateGenerationCounter(generation) {
         if (this.generationCounter) {
@@ -218,17 +213,12 @@ class UIController {
     }
 
     /**
-     * Actualiza el selector de patrones
+     * Update pattern select
      */
     updatePatternSelect() {
         if (!this.patternSelect) return;
 
-        // Limpiar opciones existentes excepto la primera
-        while (this.patternSelect.children.length > 1) {
-            this.patternSelect.removeChild(this.patternSelect.lastChild);
-        }
-
-        // Agregar patrones disponibles
+        // Add available patterns
         const patterns = this.patternLoader.getAvailablePatterns();
         patterns.forEach(patternName => {
             const patternInfo = this.patternLoader.getPatternInfo(patternName);
@@ -240,22 +230,12 @@ class UIController {
     }
 
     /**
-     * Establece el patrón seleccionado
-     */
-    setSelectedPattern(patternName) {
-        this.selectedPattern = patternName;
-        if (this.patternSelect) {
-            this.patternSelect.value = patternName;
-        }
-    }
-
-    /**
-     * Obtiene estadísticas del juego
+     * Get game stats
      */
     getGameStats() {
         const gridState = this.grid.getGridState();
         let aliveCells = 0;
-        
+
         for (let row = 0; row < gridState.length; row++) {
             for (let col = 0; col < gridState[row].length; col++) {
                 if (gridState[row][col]) {
@@ -274,10 +254,10 @@ class UIController {
     }
 
     /**
-     * Desvincula todos los eventos
+     * Unbind all events
      */
     unbindEvents() {
-        // Remover listeners de controles
+        // Remove control listeners
         if (this.playButton) {
             this.playButton.replaceWith(this.playButton.cloneNode(true));
         }
@@ -291,28 +271,8 @@ class UIController {
             this.speedRange.replaceWith(this.speedRange.cloneNode(true));
         }
 
-        // Remover listeners de la cuadrícula
         if (this.grid.element) {
             this.grid.element.replaceWith(this.grid.element.cloneNode(true));
         }
-
-        // Los listeners de teclado se mantienen a nivel documento
-    }
-
-    /**
-     * Muestra información sobre controles
-     */
-    showControls() {
-        const controls = [
-            'Espacio: Play/Pause',
-            'Ctrl+C: Limpiar cuadrícula',
-            'Ctrl+R: Recargar patrón',
-            'Ctrl+N: Siguiente generación',
-            'Click: Alternar celda o colocar patrón',
-            'Drag: Dibujar celdas'
-        ];
-
-        console.log('Controles disponibles:');
-        controls.forEach(control => console.log('- ' + control));
     }
 }
