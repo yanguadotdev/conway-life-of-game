@@ -7,7 +7,7 @@ class Cell {
     }
 
     /**
-     * Crea el elemento DOM para la celda
+     * Createt the cell element
      */
     createElement() {
         const cell = document.createElement('div');
@@ -20,16 +20,15 @@ class Cell {
     }
 
     /**
-     * Alterna el estado vivo/muerto de la celda
+     * Toggle th state of a cell
      */
     toggle() {
-        console.log('Toggle cell');
         this.isAlive = !this.isAlive;
         this.updateVisualState();
     }
 
     /**
-     * Establece el estado de la celda
+     * Set the state of a cell
      */
     setState(isAlive) {
         this.isAlive = isAlive;
@@ -37,7 +36,7 @@ class Cell {
     }
 
     /**
-     * Actualiza la apariencia visual de la celda
+     * Update the visual state of the cell
      */
     updateVisualState() {
         if (this.element) {
@@ -46,7 +45,7 @@ class Cell {
     }
 
     /**
-     * Obtiene el estado actual de la celda
+     * Get the current state of a cell
      */
     getState() {
         return this.isAlive;
