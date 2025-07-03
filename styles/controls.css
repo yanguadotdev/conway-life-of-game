@@ -1,28 +1,27 @@
 .controls {
     position: fixed;
     bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(26, 26, 26, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid #333;
-    border-radius: 16px;
-    padding: 20px 30px;
+    inset-inline: 1.5rem;
+    margin-inline: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    width: fit-content;
     max-width: 90%;
 }
 
 .controls-left,
-.controls-center,
 .controls-right {
     display: flex;
     align-items: center;
     gap: 20px;
+    
+    background: rgba(26, 26, 26, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 20px 30px;
 }
 
 .btn {
@@ -119,5 +118,6 @@
 
     > span {
         min-width: 3ch;
+        display: inline-block;
     }
 }
