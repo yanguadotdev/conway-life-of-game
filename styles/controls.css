@@ -148,13 +148,16 @@
 }
 
 .speed-control label {
-    font-size: 14px;
     color: #ccc;
 }
 
 .speed-control input {
     width: 80px;
     accent-color: #00ff88;
+}
+
+.controls-right {
+    padding: 1rem 1.25rem;
 }
 
 .generation-counter {
@@ -167,10 +170,14 @@
     flex-direction: column;
     gap: 4px;
     align-items: center;
-
     >span {
-        min-width: 3ch;
+        display: none;
+    }
+    >p {
+        text-align: center;
+        min-width: 4ch;
         display: inline-block;
+        font-size: 1.5rem;
     }
 }
 
@@ -204,8 +211,19 @@
         display: flex;
     }
 
+    .controls-right {
+        padding: 20px 30px;
+    }
+
     .generation-counter {
         flex-direction: row;
         display: block;
+
+        >span {
+            display: inline-block;
+        }
+        >p {
+            font-size: unset;
+        }
     }
 }
