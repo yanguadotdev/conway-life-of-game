@@ -109,20 +109,51 @@ class UIController {
     }
 
     /**
+     * Get cell coordinates from event (works for both mouse and touch)
+     */
+    getCellFromEvent(e) {
+        let clientX, clientY;
+        
+        if (e.type.startsWith('touch')) {
+            const touch = e.touches[0] || e.changedTouches[0];
+            clientX = touch.clientX;
+            clientY = touch.clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+        
+        // Find element at coordinates
+        const element = document.elementFromPoint(clientX, clientY);
+        
+        if (element && element.classList.contains('cell')) {
+            return {
+                element: element,
+                row: parseInt(element.dataset.row),
+                col: parseInt(element.dataset.col)
+            };
+        }
+        
+        return null;
+    }
+
+    /**
      * Bind grid events
      */
     bindGridEvents() {
         const gridElement = this.grid.element;
         if (!gridElement) return;
 
+        // === EVENTOS DE RATÓN ===
         // Click on cells
         gridElement.addEventListener('click', e => {
             this.handleCellClick(e);
         });
 
-        // Drag to draw
+        // Drag to draw - Mouse events
         gridElement.addEventListener('mousedown', e => {
             this.isDrawing = true;
+            this.handleCellHover(e);
         });
 
         gridElement.addEventListener('mousemove', e => {
@@ -139,6 +170,38 @@ class UIController {
         gridElement.addEventListener('selectstart', (e) => {
             e.preventDefault();
         });
+
+        // === Touch events ===
+        // Touch start
+        gridElement.addEventListener('touchstart', e => {
+            e.preventDefault();
+            this.isDrawing = true;
+            this.handleCellHover(e);
+        });
+
+        // Touch move
+        gridElement.addEventListener('touchmove', e => {
+            e.preventDefault();
+            if (this.isDrawing) {
+                this.handleCellHover(e);
+            }
+        });
+
+        // Touch end
+        gridElement.addEventListener('touchend', e => {
+            e.preventDefault();
+            this.isDrawing = false;
+        });
+
+        gridElement.addEventListener('touchcancel', e => {
+            e.preventDefault();
+            this.isDrawing = false;
+        });
+
+        // Prevent default touch behavior
+        gridElement.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+        }, { passive: false });
     }
 
     /**
@@ -178,11 +241,10 @@ class UIController {
      * Handle cell clicks
      */
     handleCellClick(e) {
-        const cellElement = e.target;
-        if (!cellElement.classList.contains('cell')) return;
+        const cellInfo = this.getCellFromEvent(e);
+        if (!cellInfo) return;
 
-        const row = parseInt(cellElement.dataset.row);
-        const col = parseInt(cellElement.dataset.col);
+        const { row, col } = cellInfo;
 
         if (this.selectedPattern && this.selectedPattern !== '') {
             // Load pattern at clicked position
@@ -194,16 +256,15 @@ class UIController {
     }
 
     /**
-     * Handle cell hover while dragging
+     * Handle cell hover while dragging (works for both mouse and touch)
      */
     handleCellHover(e) {
-        const cellElement = e.target;
-        if (!cellElement.classList.contains('cell')) return;
+        const cellInfo = this.getCellFromEvent(e);
+        if (!cellInfo) return;
 
-        const row = parseInt(cellElement.dataset.row);
-        const col = parseInt(cellElement.dataset.col);
+        const { row, col } = cellInfo;
 
-        // Only draw if not there is a pattern selected
+        // Only draw if there is no pattern selected
         if (!this.selectedPattern || this.selectedPattern === '') {
             this.grid.setCellState(row, col, true);
         }
