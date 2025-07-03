@@ -115,6 +115,7 @@
     color: #ccc;
     font-weight: 400;
     font-family: monospace;
+    white-space: nowrap;
 
     > span {
         min-width: 3ch;
