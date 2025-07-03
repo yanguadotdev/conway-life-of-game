@@ -144,7 +144,7 @@ class UIController {
         const gridElement = this.grid.element;
         if (!gridElement) return;
 
-        // === EVENTOS DE RATÓN ===
+        // === MOUSE EVENTS ===
         // Click on cells
         gridElement.addEventListener('click', e => {
             this.handleCellClick(e);
