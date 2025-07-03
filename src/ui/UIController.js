@@ -13,6 +13,8 @@ class UIController {
         this.patternSelect = null;
         this.speedRange = null;
         this.generationCounter = null;
+        this.btnSettings = null;
+        this.btnClose = null;
 
         // State
         this.isDrawing = false;
@@ -32,6 +34,8 @@ class UIController {
         this.patternSelect = $('#patternSelect');
         this.speedRange = $('#speedRange');
         this.generationCounter = $('#generationCount');
+        this.btnSettings = $('#btn-settings');
+        this.btnClose = $('#btn-close');
     }
 
     /**
@@ -63,37 +67,45 @@ class UIController {
      */
     bindControlEvents() {
         // Botón play/pause
-        if (this.playButton) {
-            this.playButton.addEventListener('click', () => {
-                this.simulation.toggle();
-            });
-        }
+        this.playButton && this.playButton.addEventListener('click', () => {
+            this.simulation.toggle();
+        });
 
         // Botón clear
-        if (this.clearButton) {
-            this.clearButton.addEventListener('click', () => {
-                this.simulation.stop();
-                this.grid.clear();
-            });
-        }
+        this.clearButton && this.clearButton.addEventListener('click', () => {
+            this.clear();
+        });
+
+        // Botón settings
+        this.btnSettings && this.btnSettings.addEventListener('click', () => {
+            this.btnSettings.setAttribute('aria-expanded', 'true')
+        });
+
+        // Botón close
+        this.btnClose && this.btnClose.addEventListener('click', () => {
+            this.btnSettings.setAttribute('aria-expanded', 'false')
+        });
 
         // Pattern selector
-        if (this.patternSelect) {
-            this.patternSelect.addEventListener('change', (e) => {
-                this.selectedPattern = e.target.value;
-                if (this.selectedPattern) {
-                    this.patternLoader.loadPattern(this.selectedPattern);
-                }
-            });
-        }
+        this.patternSelect && this.patternSelect.addEventListener('change', (e) => {
+            this.selectedPattern = e.target.value;
+            if (this.selectedPattern) {
+                this.patternLoader.loadPattern(this.selectedPattern);
+            }
+        });
 
         // Speed control
-        if (this.speedRange) {
-            this.speedRange.addEventListener('input', (e) => {
-                const speed = parseInt(e.target.value);
-                this.simulation.setSpeed(speed);
-            });
-        }
+        this.speedRange && this.speedRange.addEventListener('input', (e) => {
+            const speed = parseInt(e.target.value);
+            this.simulation.setSpeed(speed);
+        });
+    }
+
+    clear() {
+        this.simulation.stop();
+        this.grid.clear();
+        this.patternSelect.value = '';
+        this.selectedPattern = '';
     }
 
     /**
@@ -142,8 +154,7 @@ class UIController {
                 case 'KeyC':
                     if (e.ctrlKey) {
                         e.preventDefault();
-                        this.simulation.stop();
-                        this.grid.clear();
+                        this.clear();
                     }
                     break;
                 case 'KeyR':
