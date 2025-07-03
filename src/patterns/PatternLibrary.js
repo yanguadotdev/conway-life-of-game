@@ -82,6 +82,67 @@ class PatternLibrary {
                     [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                     [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
                 ]
+            },
+
+            acorn: {
+                name: 'Acorn',
+                description: 'Un patrón diminuto que crece enormemente antes de estabilizarse',
+                pattern: [
+                    [0,1,0,0,0,0,0],
+                    [0,0,0,1,0,0,0],
+                    [1,1,0,0,1,1,1]
+                ]
+            },
+
+            rpentomino: {
+                name: 'R-pentomino',
+                description: 'Pequeño patrón caótico que tarda más de 1,000 generaciones en estabilizarse',
+                pattern: [
+                    [0,1,1],
+                    [1,1,0],
+                    [0,1,0]
+                ]
+            },
+
+            lwss: {
+                name: 'LWSS',
+                description: 'Nave ligera que se mueve horizontalmente',
+                pattern: [
+                    [0,1,1,1,1],
+                    [1,0,0,0,1],
+                    [0,0,0,0,1],
+                    [1,0,0,1,0]
+                ]
+            },
+            
+            pentadecathlon: {
+                name: 'Pentadecathlon',
+                description: 'Oscilador de periodo 15 que parece una pista',
+                pattern: [
+                    [0,1,0],
+                    [1,1,1],
+                    [1,1,1],
+                    [0,1,0],
+                    [0,1,0],
+                    [0,1,0],
+                    [0,1,0],
+                    [1,1,1],
+                    [1,1,1],
+                    [0,1,0]
+                ]
+            },
+            
+            tumbler: {
+                name: 'Tumbler',
+                description: 'Oscilador con forma de vaso que se balancea',
+                pattern: [
+                    [0,1,1,0,1,1,0],
+                    [0,1,1,0,1,1,0],
+                    [0,0,1,0,1,0,0],
+                    [1,0,1,0,1,0,1],
+                    [1,0,1,0,1,0,1],
+                    [1,1,0,0,0,1,1]
+                ]
             }
         };
     }
