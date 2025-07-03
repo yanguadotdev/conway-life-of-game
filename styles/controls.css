@@ -7,15 +7,16 @@
     justify-content: space-between;
     align-items: center;
     gap: 20px;
-    max-width: 90%;
+    max-width: 1200px;
 }
 
 .controls-left,
-.controls-right {
+.controls-right,
+.btn-settings {
     display: flex;
     align-items: center;
     gap: 20px;
-    
+
     background: rgba(26, 26, 26, 0.95);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
@@ -24,10 +25,56 @@
     padding: 20px 30px;
 }
 
+.btn-settings {
+    padding: 16px 24px;
+
+    &[aria-expanded='true']+.controls-left {
+        transform: scale(1);
+    }
+}
+
+.controls-left {
+    position: fixed;
+    bottom: 30px;
+    transition: transform .3s;
+    transform: scale(0);
+    transform-origin: bottom left;
+
+    flex-direction: column;
+    padding-top: 24px;
+
+    >.btn {
+        order: 1;
+        width: 100%;
+    }
+
+    >.btn-close {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-content: center;
+        border-radius: 50%;
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        background: rgba(26, 26, 26, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid #333;
+    }
+
+    .speed-control {
+        display: flex;
+        width: 100%;
+
+        >input {
+            width: 100%;
+        }
+    }
+}
+
 .btn {
     background: #00ff88;
     color: #000;
-    border: none;
     padding: 12px 24px;
     border-radius: 4px;
     cursor: pointer;
@@ -39,8 +86,9 @@
     align-items: center;
     gap: 4px;
     text-wrap: nowrap;
+    justify-content: center;
 
-    > svg {
+    >svg {
         flex-shrink: 0;
         width: 20px;
         height: 20px;
@@ -94,9 +142,9 @@
 }
 
 .speed-control {
-    display: flex;
     align-items: center;
     gap: 10px;
+    display: none;
 }
 
 .speed-control label {
@@ -115,9 +163,49 @@
     font-weight: 400;
     font-family: monospace;
     white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
 
-    > span {
+    >span {
         min-width: 3ch;
         display: inline-block;
+    }
+}
+
+
+
+@media screen and (width > 980px) {
+    .controls-left {
+        flex-direction: row;
+        position: static;
+        padding-top: 20px;
+        transform: none;
+
+        >.btn {
+            order: 0;
+        }
+
+        .btn-close {
+            display: none;
+        }
+
+        .speed-control {
+            display: none;
+        }
+    }
+
+    .btn-settings {
+        display: none;
+    }
+
+    .speed-control {
+        display: flex;
+    }
+
+    .generation-counter {
+        flex-direction: row;
+        display: block;
     }
 }
